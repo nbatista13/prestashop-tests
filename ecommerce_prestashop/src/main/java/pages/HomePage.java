@@ -12,9 +12,12 @@ public class HomePage {
 	private WebDriver driver;
 
 	List<WebElement> listaProdutos = new ArrayList();
-
 	private By produtos = By.className("product-description");
+
 	private By textoProdutosNoCarrinho = By.className("cart-products-count");
+
+	private By descricoesDosProdutos = By.cssSelector(".product-description a");
+	private By precoDosProdutos = By.cssSelector(".product-description span.price");
 
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
@@ -32,12 +35,17 @@ public class HomePage {
 
 	public int obterQuantidadeProdutosNoCarrinho() {
 		String quantidadeProdutosNoCarrinho = driver.findElement(textoProdutosNoCarrinho).getText();
-		quantidadeProdutosNoCarrinho = quantidadeProdutosNoCarrinho.replace("(", " ");
-		quantidadeProdutosNoCarrinho = quantidadeProdutosNoCarrinho.replace(")", " ");
 
-		int qtdProdutosNoCarrinho = Integer.parseInt(quantidadeProdutosNoCarrinho);
+		return Integer.parseInt(quantidadeProdutosNoCarrinho.substring(1, 2));
+	}
 
-		return qtdProdutosNoCarrinho;
+	public String obterNomeProduto(int indice) {
+		return driver.findElements(descricoesDosProdutos).get(indice).getText();
+
+	}
+	
+	public String obterPrecoProduto(int indice) {
+		return driver.findElements(precoDosProdutos).get(indice).getText();
 	}
 
 }
